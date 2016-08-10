@@ -3,7 +3,7 @@
 ## Requirements
 
 This project requires a working [caffe](https://github.com/BVLC/caffe) installation (with python).
-GnuGo is required for the simulate.sh bash script for generating game data.
+[GnuGo](https://www.gnu.org/software/gnugo) is required for the simulate.sh bash script for generating game data.
 Alongside caffe's existing python dependencies, jtauber's [sgf](https://github.com/jtauber/sgf) parser is also required.
 
 ## simulate.sh
