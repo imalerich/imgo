@@ -28,7 +28,7 @@ do
 	do
 		# Run a simulation through gnugo adn output the result as an sgf in GAMES_DIR.
 		FILENAME="$GAMES_DIR/$INDEX.sgf"
-		gnugo --boardsize 9 --never-resign --komi 0 --benchmark 81 --level $LEVEL --outfile $FILENAME
+		gnugo --boardsize 9 --never-resign --benchmark 81 --level $LEVEL --outfile $FILENAME
 		# Increment the current game index.
 		INDEX=$((INDEX+1))
 	done
