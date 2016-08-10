@@ -1,2 +1,3 @@
 data/games/
 data/lmdb_records_*
+*.swp
