@@ -15,7 +15,7 @@ BOARD_SIZE = 9
 
 # Create the LMDB database for storing our records.
 DB_NAME = "lmdb_records_" + str(NUM_RECORDS)
-MAP_SIZE = 10 * NUM_RECORDS * BOARD_SIZE * BOARD_SIZE * np.dtype(np.int8).itemsize
+MAP_SIZE = 10 * NUM_RECORDS * 2 * BOARD_SIZE * BOARD_SIZE * np.dtype(np.int8).itemsize
 env = lmdb.open(DB_NAME, map_size=MAP_SIZE)
 txn = env.begin(write=True)
 
@@ -55,26 +55,26 @@ for game in range(0, NUM_RECORDS):
             score = -(score - kom)
 
         # Next up we need to build the array representing the game board.
-        # This will be a 9x9 board with 1 channel per location.
-        # Possible values are {0: None, 1: Black, -1: White}.
-        board = np.zeros((1, BOARD_SIZE, BOARD_SIZE), dtype=np.int8)
+        # This will be a 9x9 board with 2 channel per location.
+        # White will be channel 0, Black will be channel 1.
+        board = np.zeros((2, BOARD_SIZE, BOARD_SIZE), dtype=np.int8)
         game = sgf.parse(r).children[0]
 
         # Loop through each move of the game.
         for node in game.rest:
             # Find the move (black or white) and position
             if 'W' in node.properties:
-                move = -1
+                channel = 0
                 pos = node.properties['W'][0]
             elif 'B' in node.properties:
-                move = 1
+                channel = 1
                 pos = node.properties['B'][0]
 
             # Place the move onto the board.
             if len(pos) >= 2:
                 x = ord(pos[0]) - ord('a')
                 y = ord(pos[1]) - ord('a')
-                board[0][x][y] = move
+                board[channel][x][y] = 1
 
             # Include random entries from this game.
             if random.random() < 0.3:
@@ -83,3 +83,4 @@ for game in range(0, NUM_RECORDS):
         # Debug print the data we have found, this is what we will be training on.
         print(score)
         print(board[0])
+
