@@ -20,7 +20,7 @@ env = lmdb.open(DB_NAME, map_size=MAP_SIZE)
 txn = env.begin(write=True)
 
 # Record a game entry to the lmdb database.
-def recordentry(board, score, txn):
+def recordentry(game, board, score, txn):
     datum = caffe.proto.caffe_pb2.Datum()
     datum.channels = board.shape[0]
     datum.height = board.shape[1]
@@ -32,11 +32,13 @@ def recordentry(board, score, txn):
     return
 
 # Loop through a number of game records.
-for game in range(0, NUM_RECORDS):
+for g in range(0, NUM_RECORDS):
 
     # Open a file for parsing.
-    filename = 'games/' + str(game) + '.sgf'
+    filename = 'games/' + str(g) + '.sgf'
     with open(filename, 'r') as f:
+
+        print('Adding ' + str(filename) + ' to lmdb...')
 
         # Use a regular expression to try and find the score of the game.
         # We will compute a single value to use as a label in our training and validation sets.
@@ -53,6 +55,7 @@ for game in range(0, NUM_RECORDS):
             score += kom
         else:
             score = -(score - kom)
+        score = int(score * 10)
 
         # Next up we need to build the array representing the game board.
         # This will be a 9x9 board with 2 channel per location.
@@ -78,9 +81,6 @@ for game in range(0, NUM_RECORDS):
 
             # Include random entries from this game.
             if random.random() < 0.3:
-                recordentry(board, score, txn)
+                recordentry(g, board, score, txn)
 
-        # Debug print the data we have found, this is what we will be training on.
-        print(score)
-        print(board[0])
-
+print('SUCCESS')
