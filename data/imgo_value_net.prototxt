@@ -1,0 +1,95 @@
+name: "ImGoValue"
+
+layer {
+	name: "imgo"
+	type: "Data"
+	data_param {
+		source: "lmdb_records_100"
+		backend: LMDB
+		batch_size: 10
+	}
+	top: "data"
+	top: "label"
+}
+
+layer {
+	name: "conv"
+	type: "Convolution"
+	param { lr_mult: 1 }
+	param { lr_mult: 2 }
+	convolution_param {
+		num_output: 20
+		kernel_size: 5
+		stride: 1
+		weight_filler {
+			type: "xavier"
+		}
+		bias_filler {
+			type: "constant"
+		}
+	}
+	bottom: "data"
+	top: "conv"
+}
+
+layer {
+	name: "pool"
+	type: "Pooling"
+	pooling_param {
+		kernel_size: 2
+		stride: 2
+		pool: MAX
+	}
+	bottom: "conv"
+	top: "pool"
+}
+
+layer {
+	name: "ip1"
+	type: "InnerProduct"
+	param { lr_mult: 1 }
+	param { lr_mult: 2 }
+	inner_product_param {
+		num_output: 500
+		weight_filler {
+			type: "xavier"
+		}
+		bias_filler {
+			type: "constant"
+		}
+	}
+	bottom: "pool"
+	top: "ip1"
+}
+
+layer {
+	name: "relu"
+	type: "ReLU"
+	bottom: "ip1"
+	top: "ip1"
+}
+
+layer {
+	name: "ip2"
+	type: "InnerProduct"
+	param { lr_mult: 1 }
+	param { lr_mult: 2 }
+	inner_product_param {
+		num_output: 10
+		weight_filler {
+			type: "xavier"
+		}
+		bias_filler {
+			type: "constant"
+		}
+	}
+	bottom: "ip1"
+	top: "ip2"
+}
+
+layer {
+	name: "loss"
+	type: "EuclideanLoss"
+	bottom: "ip2"
+	bottom: "label"
+}
