@@ -40,7 +40,8 @@ with env.begin(write=True) as txn:
     for g in range(0, NUM_RECORDS):
 
         # Open a file for parsing.
-        filename = 'games/' + str(g) + '.sgf'
+        game_num = int(random.random() * 1000) % 1000
+        filename = 'games/' + str(game_num) + '.sgf'
         with open(filename, 'r') as f:
 
             print('Adding ' + str(filename) + ' to lmdb...')
@@ -57,9 +58,11 @@ with env.begin(write=True) as txn:
             win = res[0]
             score = float(res[2:]) # Score needs to be a float until we remove komi.
             if win == 'B':
-                score += kom
+                # score += kom
+                score = 0
             else:
-                score = -(score - kom)
+                # score = -(score - kom)
+                score = 1
             score = int(score)
 
             # Next up we need to build the array representing the game board.
