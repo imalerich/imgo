@@ -5,7 +5,13 @@ import caffe
 import sgf
 import re
 
+# This should be then number of records you generated, not the number of records
+# that you trained on.
+NUM_RECORDS = 1000
+# Should be the same BOARD_SIZE as found in generate.sh that was used to generate
+# the games directory.
 BOARD_SIZE = 9
+# How many channels to use (1 for each player).
 CHANNELS = 2
 
 caffe.set_mode_gpu()
@@ -13,13 +19,14 @@ MODEL = 'imgo_value_net_deploy.prototxt'
 PRETRAINED = 'imgo_value_iter_10000.caffemodel'
 net = caffe.Net(MODEL, PRETRAINED, caffe.TEST)
 
+# How many of our predictions did we predict correctly?
 CORRECT=0
+# How many predictions did we make?
 TOTAL=0
 
-NUM_RECORDS = 1000
 for g in range(0, NUM_RECORDS):
 
-    filename = 'games/' + str(g) + '.sgf'
+    filename = '../data/games/' + str(g) + '.sgf'
     with open(filename, 'r') as f: 
 
         r = f.read()
@@ -55,4 +62,5 @@ for g in range(0, NUM_RECORDS):
         if score == pr.argmax():
             CORRECT+=1
 
+# How well did we do?
 print(str(CORRECT) + '/' + str(TOTAL))

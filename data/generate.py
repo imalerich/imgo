@@ -19,7 +19,7 @@ CHANNELS = 2
 NUM_ENTRIES = 0
 
 # Create the LMDB database for storing our records.
-DB_NAME = "lmdb_records_" + str(NUM_RECORDS)
+DB_NAME = "lmdb/lmdb_records_" + str(NUM_RECORDS)
 MAP_SIZE = 10 * NUM_RECORDS * CHANNELS * BOARD_SIZE * BOARD_SIZE * np.dtype(np.int8).itemsize
 env = lmdb.open(DB_NAME, map_size=MAP_SIZE)
 with env.begin(write=True) as txn:
