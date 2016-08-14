@@ -1,4 +1,4 @@
-name: "ImGoValue"
+name: "ImGoPolicy"
 layer {
   name: "imgo"
   type: "Data"
@@ -8,7 +8,7 @@ layer {
   	phase: TRAIN
   }
   data_param {
-    source: "../data/lmdb/lmdb_value_train"
+    source: "../data/lmdb/lmdb_white_policy_train"
     batch_size: 100
     backend: LMDB
   }
@@ -22,7 +22,7 @@ layer {
   	phase: TEST
   }
   data_param {
-    source: "../data/lmdb/lmdb_value_test"
+    source: "../data/lmdb/lmdb_white_policy_test"
     batch_size: 100
     backend: LMDB
   }
@@ -105,7 +105,7 @@ layer {
   bottom: "pool2"
   top: "ip"
   inner_product_param {
-    num_output: 2
+    num_output: 82
   }
 }
 layer {

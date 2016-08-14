@@ -1,30 +1,15 @@
-name: "ImGoValue"
+name: "ImGoPolicy"
 layer {
   name: "imgo"
-  type: "Data"
+  type: "Input"
   top: "data"
-  top: "label"
-  include {
-  	phase: TRAIN
-  }
-  data_param {
-    source: "../data/lmdb/lmdb_value_train"
-    batch_size: 100
-    backend: LMDB
-  }
-}
-layer {
-  name: "imgo"
-  type: "Data"
-  top: "data"
-  top: "label"
-  include {
-  	phase: TEST
-  }
-  data_param {
-    source: "../data/lmdb/lmdb_value_test"
-    batch_size: 100
-    backend: LMDB
+  input_param {
+  	shape: {
+		dim: 1
+		dim: 2
+		dim: 9
+		dim: 9
+	}
   }
 }
 layer {
@@ -105,23 +90,12 @@ layer {
   bottom: "pool2"
   top: "ip"
   inner_product_param {
-    num_output: 2
+    num_output: 82
   }
 }
 layer {
   name: "loss"
-  type: "SoftmaxWithLoss"
+  type: "Softmax"
   bottom: "ip"
-  bottom: "label"
   top: "loss"
-}
-layer {
-	name: "accuracy"
-	type: "Accuracy"
-	bottom: "ip"
-	bottom: "label"
-	top: "accuracy"
-	include {
-		phase: TEST
-	}
 }

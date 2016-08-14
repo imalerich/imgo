@@ -53,6 +53,11 @@ def nodeToIndex(node):
     else:
         return BOARD_SIZE**2
 
+
+# Returns if this current node is to be played by the black player.
+def isNodeBlack(node):
+    return ('B' in node.properties)
+
 # Record a game entry to the lmdb database.
 def recordEntry(game, board, label, txn):
     datum = caffe.proto.caffe_pb2.Datum()
