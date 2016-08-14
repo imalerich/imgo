@@ -61,9 +61,6 @@ for g in range(0, NUM_RECORDS):
                 moves.append(idx)
                 pr[idx] = 0 # Don't take moves more than once.
 
-            print('moves: ' + str(moves))
-            print('actual: ' + str(imgo.nodeToIndex(node)))
-
             # Check if the actual move was predicted.
             TOTAL += 1
             if imgo.nodeToIndex(node) in moves:
