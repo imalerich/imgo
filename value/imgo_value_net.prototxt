@@ -8,7 +8,7 @@ layer {
   	phase: TRAIN
   }
   data_param {
-    source: "../data/lmdb/lmdb_records_1000"
+    source: "../data/lmdb/lmdb_records_train"
     batch_size: 100
     backend: LMDB
   }
@@ -22,8 +22,8 @@ layer {
   	phase: TEST
   }
   data_param {
-    source: "lmdb_records_25"
-    batch_size: 10
+    source: "../data/lmdb/lmdb_records_test"
+    batch_size: 100
     backend: LMDB
   }
 }

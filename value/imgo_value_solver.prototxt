@@ -1,6 +1,6 @@
 # The train net protocol buffer definition.
 net: "imgo_value_net.prototxt"
-test_iter: 10
+test_iter: 100
 test_interval: 500
 base_lr: 0.01
 momentum: 0.9
