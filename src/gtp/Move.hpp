@@ -22,8 +22,9 @@ public:
 		this->vertex = vertex;
 	}
 
-	/** Encapsulated bool data. */
+	/** Encapsulated Color data. */
 	Color color;
+	/** Encapsulated Vertex data. */
 	Vertex vertex;
 };
 

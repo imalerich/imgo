@@ -6,7 +6,7 @@
 
 namespace gtp {
 
-ARG_LIST Engine::args_for_cmd(const Command &cmd, std::string line) {
+ARG_LIST Engine::args_for_cmd(const Command &cmd, const std::string &line) {
 	std::istringstream iss(line);
 	ARG_LIST args;
 
@@ -54,7 +54,7 @@ ARG_LIST Engine::args_for_cmd(const Command &cmd, std::string line) {
 	return args;
 }
 
-std::string Engine::preproc_line(std::string line) {
+std::string Engine::preproc_line(const std::string &line) {
 	// We will build up this string from processing 'line', then return it.
 	std::string ret;
 
@@ -80,7 +80,7 @@ std::string Engine::preproc_line(std::string line) {
 	return ret;
 }
 
-bool Engine::ignore_line(const std::string line) {
+bool Engine::ignore_line(const std::string &line) {
 	bool only_space = true;
 	for (auto c : line) {
 		only_space = only_space && isspace(c);

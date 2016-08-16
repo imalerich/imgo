@@ -24,7 +24,7 @@ private:
 	 * \param line A string of arguments to be parsed. 
 	 * \return Array of pointers to argument objects.
 	 */
-	ARG_LIST args_for_cmd(const Command &cmd, std::string line);
+	ARG_LIST args_for_cmd(const Command &cmd, const std::string &line);
 
 	/**
 	 * Performs preprocessing on a line of text.
@@ -36,13 +36,13 @@ private:
 	 * \param line to the line to be processed.
 	 * \return Processed version of the input string.
 	 */
-	std::string preproc_line(std::string line);
+	std::string preproc_line(const std::string &line);
 
 	/**
 	 * \param The line in question.
 	 * \return Should this line be ignored?
 	 */
-	bool ignore_line(const std::string line);
+	bool ignore_line(const std::string &line);
 };
 
 }
