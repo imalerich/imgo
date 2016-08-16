@@ -28,8 +28,8 @@ NUM_TEST = NUM_RECORDS - NUM_TRAIN
 SAMPLES_PER_GAME = 10
 
 GAME_BYTES = imgo.CHANNELS * imgo.BOARD_SIZE**2  * np.dtype(np.int8).itemsize
-TRAIN_MAP_SIZE = 10 * NUM_TRAIN * GAME_BYTES * SAMPLES_PER_GAME
-TEST_MAP_SIZE = 10 * NUM_TEST * GAME_BYTES * SAMPLES_PER_GAME
+TRAIN_MAP_SIZE = 10 * NUM_TRAIN * GAME_BYTES * (SAMPLES_PER_GAME+1)
+TEST_MAP_SIZE = 10 * NUM_TEST * GAME_BYTES * (SAMPLES_PER_GAME+1)
 
 # Create and open an LMDB Database for both our training and test records.
 train_env = lmdb.open(TRAIN_DB, map_size=TRAIN_MAP_SIZE)
@@ -82,5 +82,9 @@ with train_env.begin(write=True) as train_txn, test_env.begin(write=True) as tes
                     imgo.recordEntry(g, board, score, txn)
                     NUM_ENTRIES += 1
                     remaining -= 1
+
+            # Always include a record for the last state of the game.
+            imgo.recordEntry(g, board, score, txn)
+            NUM_ENTRIES += 1
 
     print('SUCCESS! Generated ' + str(NUM_ENTRIES) + ' entries.')

@@ -29,9 +29,11 @@ white_net = caffe.Net(MODEL, WHITE_PRETRAINED, caffe.TEST)
 black_net = caffe.Net(MODEL, BLACK_PRETRAINED, caffe.TEST)
 
 # How many of our predictions did we predict correctly?
-CORRECT = 0
+BLACK_CORRECT = 0
+WHITE_CORRECT = 0
 # How many predictions did we make?
-TOTAL = 0
+BLACK_TOTAL = 0
+WHITE_TOTAL = 0
 
 for g in range(0, NUM_RECORDS):
 
@@ -62,12 +64,15 @@ for g in range(0, NUM_RECORDS):
                 pr[idx] = 0 # Don't take moves more than once.
 
             # Check if the actual move was predicted.
-            TOTAL += 1
+            BLACK_TOTAL += (1 if imgo.isNodeBlack(node) else 0)
+            WHITE_TOTAL += (0 if imgo.isNodeBlack(node) else 1)
             if imgo.nodeToIndex(node) in moves:
-                CORRECT += 1
+                BLACK_CORRECT += (1 if imgo.isNodeBlack(node) else 0)
+                WHITE_CORRECT += (0 if imgo.isNodeBlack(node) else 1)
 
             # Update the game board.
             imgo.addNodeToGame(board, node)
 
 # How well did we do?
-print(str(CORRECT) + '/' + str(TOTAL))
+print(str(BLACK_CORRECT) + '/' + str(BLACK_TOTAL))
+print(str(WHITE_CORRECT) + '/' + str(WHITE_TOTAL))
