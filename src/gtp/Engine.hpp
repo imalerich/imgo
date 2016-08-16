@@ -1,5 +1,11 @@
+#ifndef ENGINE_HPP
+#define ENGINE_HPP
+
 #include <iostream>
 #include <string>
+
+#include "Command.hpp"
+#include "Argument.hpp"
 
 namespace gtp {
 
@@ -12,6 +18,14 @@ class Engine {
 public:
 
 private:
+	/**
+	 * Parse all arguments from the input line, given the type of argument that will be parsed.
+	 * \param cmd Type of command to parse arguments for.
+	 * \param line A string of arguments to be parsed. 
+	 * \return Array of pointers to argument objects.
+	 */
+	ARG_LIST args_for_cmd(const Command &cmd, std::string line);
+
 	/**
 	 * Performs preprocessing on a line of text.
 	 * The following operation are performed in accordance with the GTP specification.
@@ -32,3 +46,5 @@ private:
 };
 
 }
+
+#endif

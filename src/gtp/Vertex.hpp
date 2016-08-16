@@ -1,5 +1,9 @@
+#ifndef VERTEX_HPP
+#define VERTEX_HPP
+
 #include <string>
 #include <utility>
+#include "Argument.hpp"
 
 namespace gtp {
 
@@ -9,8 +13,11 @@ namespace gtp {
  * A10, where A is the horizontal position of the vertex (Left->Right)
  * and 10 is the Vertical Position of the vertex (Bottom->Top).
  */
-class Vertex {
+class Vertex : public iArgument {
 public:
+	/** Needed so we can store it as a non-reference in the move container. */
+	Vertex();
+
 	/**
 	 * Constructs a vertex object from the string representation returned by 
 	 * the Gnu Text Protocol.
@@ -31,3 +38,5 @@ private:
 };
 
 }
+
+#endif

@@ -1,5 +1,5 @@
-CFLAGS = -std=c++11 -Wall -g -c
-OBJ = GtpEngine.o GtpPlayer.o GtpVertex.o GtpCommand.o
+CFLAGS = -std=c++1y -Wall -g -c
+OBJ = Engine.o Player.o Vertex.o Command.o
 LIB = ../../lib
 OUT = $(LIB)/libimgtp.a
 
@@ -7,17 +7,21 @@ imgtp.a: $(OBJ)
 	[ -d $(LIB) ] || mkdir $(LIB)
 	ar rvs $(OUT) $(OBJ)
 
-GtpEngine.o: GtpEngine.hpp GtpEngine.cpp
-	g++ $(CFLAGS) GtpEngine.cpp
+Engine.o: Engine.hpp Engine.cpp Move Command.o
+	g++ $(CFLAGS) Engine.cpp
 
-GtpPlayer.o: GtpPlayer.hpp GtpPlayer.cpp
-	g++ $(CFLAGS) GtpPlayer.cpp
+Player.o: Player.hpp Player.cpp
+	g++ $(CFLAGS) Player.cpp
 
-GtpVertex.o: GtpVertex.hpp GtpVertex.cpp
-	g++ $(CFLAGS) GtpVertex.cpp
+Vertex.o: Vertex.hpp Vertex.cpp
+	g++ $(CFLAGS) Vertex.cpp
 	
-GtpCommand.o: GtpCommand.hpp GtpCommand.cpp
-	g++ $(CFLAGS) GtpCommand.cpp
+Command.o: Command.hpp Command.cpp
+	g++ $(CFLAGS) Command.cpp
+
+Move: Argument Player.o Vertex.o
+
+Argument: Argument.hpp
 
 clean:
 	rm -rf *.o

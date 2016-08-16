@@ -1,10 +1,12 @@
+#include <boost/lexical_cast.hpp>
 #include <sstream>
 #include <ctype.h>
-#include "GtpVertex.hpp"
+#include "Vertex.hpp"
 
 namespace gtp {
 
 Vertex::Vertex(std::string v) {
+	iArgument::type = ARG_VERTEX;
 	char h;
 	std::istringstream iss(v);
 	iss >> h >> v_pos;
