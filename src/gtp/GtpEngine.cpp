@@ -3,12 +3,12 @@
 
 namespace gtp {
 
-std::string GtpEngine::preproc_line(std::string line) {
+std::string Engine::preproc_line(std::string line) {
 	// We will build up this string from processing 'line', then return it.
 	std::string ret;
 
 	for (auto c : line) {
-		switch (line[i]) {
+		switch (c) {
 		// Ignored control characters.
 		case '\v':
 		case '\b':
@@ -22,14 +22,14 @@ std::string GtpEngine::preproc_line(std::string line) {
 		case '#':
 			break;
 		default:
-			ret.push_back(line[i]);
+			ret.push_back(c);
 		}
 	}
 
 	return ret;
 }
 
-bool GtpEngine::ignore_line(const std::string line) {
+bool Engine::ignore_line(const std::string line) {
 	bool only_space = true;
 	for (auto c : line) {
 		only_space = only_space && isspace(c);

@@ -1,6 +1,6 @@
-#include <istringstream>
+#include <sstream>
 #include <ctype.h>
-#include "Vertex.hpp"
+#include "GtpVertex.hpp"
 
 namespace gtp {
 

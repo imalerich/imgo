@@ -1,5 +1,7 @@
 data/games/
 data/lmdb/
+bin/
+lib/
 *.caffemodel
 *.solverstate
 *.pyc

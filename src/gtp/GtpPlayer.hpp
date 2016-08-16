@@ -7,8 +7,8 @@ namespace gtp {
  * Renamed to player to make it slightly less ambiguous.
  */
 enum Player {
-	BLACK = 0,
-	WHITE = 1
+	BLACK,
+	WHITE
 };
 
 /**
@@ -18,6 +18,12 @@ enum Player {
  * \param String to parse into a Player enumerated object.
  * \return Player representation of the input string.
  */
-Player stringToPlayer(std::string str);
+Player stringToPlayer(const std::string str);
+
+/**
+ * \p Object of the Player enumerated type.
+ * \return A string representation of that enum supported by the gtp.
+ */
+std::string playerToString(const Player p);
 
 }

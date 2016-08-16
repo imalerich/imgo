@@ -28,6 +28,6 @@ private:
 	unsigned h_pos;
 	/// Vertical position of this vertex, where 0 is the bottom edge of the board.
 	unsigned v_pos;
-}
+};
 
 }

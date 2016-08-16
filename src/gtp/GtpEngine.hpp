@@ -8,7 +8,7 @@ namespace gtp {
  * An instance of this class may be used to communicate between
  * with the go server that maintains the current game. 
  */
-class GtpEngine {
+class Engine {
 public:
 
 private:
@@ -29,6 +29,6 @@ private:
 	 * \return Should this line be ignored?
 	 */
 	bool ignore_line(const std::string line);
-}
+};
 
 }
