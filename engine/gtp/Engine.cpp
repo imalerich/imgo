@@ -24,6 +24,12 @@ Engine::Engine() {
 	register_proc(CMD_GENMOVE, &genmove);
 }
 
+void Engine::play(std::istream &is) {
+	while (!is.eof()) {
+		engine.proc_command(is);
+	}
+}
+
 void Engine::proc_command(std::istream &is) {
 	std::string line;
 	getline(is, line);

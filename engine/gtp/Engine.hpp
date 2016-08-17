@@ -34,6 +34,14 @@ public:
 	Engine();
 
 	/**
+	 * Main game loop for the engine.
+	 * This will read and execute commands from the given input stream
+	 * until either an EOF is sent or the 'quit' command is given.
+	 * \param is Input stream to read commands from.
+	 */
+	void play(std::istream &is);
+
+	/**
 	 * Read and execute a single command from the input stream.
 	 * \param is Input stream to read a command from.
 	 */
