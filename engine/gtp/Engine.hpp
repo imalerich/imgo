@@ -28,6 +28,12 @@ typedef std::string (*ProcCmd)(const ARG_LIST&);
 class Engine {
 public:
 	/**
+	 * Constructs an Engine by registering the default implementation
+	 * for each supported command.
+	 */
+	Engine();
+
+	/**
 	 * Read and execute a single command from the input stream.
 	 * \param is Input stream to read a command from.
 	 */

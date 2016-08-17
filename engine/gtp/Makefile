@@ -7,7 +7,7 @@ imgtp.a: $(OBJ)
 	[ -d $(LIB) ] || mkdir $(LIB)
 	ar rvs $(OUT) $(OBJ)
 
-Engine.o: Engine.hpp Engine.cpp Move.hpp Command.hpp
+Engine.o: Engine.hpp Engine.cpp Move.hpp Command.hpp Defaults
 	g++ $(CFLAGS) Engine.cpp
 
 Player.o: Player.hpp Player.cpp
@@ -24,6 +24,8 @@ Argument.o: Argument.hpp Argument.cpp
 
 Move.o: Argument.hpp Player.hpp Vertex.hpp Move.hpp Move.cpp
 	g++ $(CFLAGS) Move.cpp
+
+Defaults: Argument.hpp Command.hpp Vertex.hpp
 
 clean:
 	rm -rf *.o

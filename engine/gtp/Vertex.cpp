@@ -1,4 +1,5 @@
 #include <boost/lexical_cast.hpp>
+#include <string>
 #include <sstream>
 #include <ctype.h>
 #include "Vertex.hpp"
@@ -13,8 +14,19 @@ Vertex::Vertex(std::string v) {
 	h_pos = toupper(h) - 'A';
 }
 
-std::pair<unsigned, unsigned> Vertex::coords() {
+Vertex::Vertex(int x, int y) {
+	iArgument::type = ARG_VERTEX;
+	h_pos = x;
+	v_pos = y;
+}
+
+std::pair<int, int> Vertex::coords() {
 	return std::make_pair(h_pos, v_pos);
+}
+
+std::string Vertex::to_string() {
+	char arr[] = { (char)('A' + h_pos), '\0' };
+	return std::string(arr) + std::to_string(v_pos + 1);
 }
 
 }

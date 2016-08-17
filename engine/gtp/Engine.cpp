@@ -1,9 +1,28 @@
 #include <ctype.h>
 #include <memory>
+#include <stdlib.h>
+#include <time.h>
+
+#include "Defaults.hpp"
 #include "Engine.hpp"
 #include "Move.hpp"
 
 namespace gtp {
+
+Engine::Engine() {
+	srand(time(NULL));
+	register_proc(CMD_PROTOCOL_VERSION, &protocol_version);
+	register_proc(CMD_NAME, &name);
+	register_proc(CMD_VERSION, &version);
+	register_proc(CMD_KNOWN_COMMAND, &known_command);
+	register_proc(CMD_LIST_COMMANDS, &list_commands);
+	register_proc(CMD_QUIT, &quit);
+	register_proc(CMD_BOARDSIZE, &boardsize);
+	register_proc(CMD_CLEAR_BOARD, &clear_board);
+	register_proc(CMD_KOMI, &do_nothing);
+	register_proc(CMD_PLAY, &do_nothing);
+	register_proc(CMD_GENMOVE, &genmove);
+}
 
 void Engine::proc_command(std::istream &is) {
 	std::string line;
@@ -14,11 +33,13 @@ void Engine::proc_command(std::istream &is) {
 		return;
 	}
 
-	std::string id = "", cmd_str;
+	std::string id = " ", cmd_str;
 	std::istringstream iss(line);
 	iss >> cmd_str;
 	if (!is_command(cmd_str)) {
-		id = cmd_str;
+		bool is_number = true;
+		for (auto c : cmd_str) { is_number = is_number && isdigit(c); }
+		id = is_number ? cmd_str + " " : id;
 		iss >> cmd_str;
 	}
 
@@ -27,9 +48,10 @@ void Engine::proc_command(std::istream &is) {
 
 	try {
 		ProcCmd proc = commands.at(cmd);
-		std::cout << id << proc(args) << '\n';
+		std::string out = proc(args);
+		std::cout << "=" << id << proc(args) << "\n\n";
 	} catch (std::out_of_range e) { 
-		std::cerr << "ERROR! No registered process for Command: " << cmd_str << "!\n";
+		std::cout << "?" << id << "unknown command\n\n";
 	}
 }
 

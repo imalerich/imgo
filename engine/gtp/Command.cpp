@@ -29,8 +29,8 @@ Command string_to_command(const std::string &str) {
 	}
 }
 
-std::string command_to_string(const Command &c) {
-	std::string arr[] = {
+std::vector<std::string> all_commands() {
+	std::vector<std::string> arr = {
 		"unknown",
 		"protocol_version",
 		"name",
@@ -45,7 +45,11 @@ std::string command_to_string(const Command &c) {
 		"genmove"
 	};
 
-	return arr[c];
+	return arr;
+}
+
+std::string command_to_string(const Command &c) {
+	return all_commands()[c];
 }
 
 }

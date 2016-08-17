@@ -1,6 +1,7 @@
 #ifndef COMMAND_HPP
 #define COMMAND_HPP
 
+#include <vector>
 #include <string>
 
 namespace gtp {
@@ -38,6 +39,11 @@ bool is_command(const std::string &str);
  * \return An object of the Command enumerated type.
  */
 Command string_to_command(const std::string &str);
+
+/**
+ * \return A c++ vector with the string representation of every supported command.
+ */
+std::vector<std::string> all_commands();
 
 /**
  * \praam c Command object to converted into a valid string representation.

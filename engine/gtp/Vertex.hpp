@@ -25,16 +25,29 @@ public:
 	Vertex(std::string v);
 
 	/**
+	 * Construct a vertex from set x, y values.
+	 * \param x X-Coordinate of the vertex, should be in the range [0, BOARD_SIZE)
+	 * \param y Y-Coordinate of the vertex, should be in the range [0, BOARD_SIZE)
+	 */
+	Vertex(int x, int y);
+
+	/**
 	 * Returns the coordinate representation of this vertex as a
 	 * pair of unsigned integers.
 	 */
-	std::pair<unsigned, unsigned> coords();
+	std::pair<int, int> coords();
+
+	/**
+	 * Convert this vector into a string representation that
+	 * may be output by the GTP engine.
+	 */
+	std::string to_string();
 
 private:
 	/// Horizontal position of this vertex where 0 is the left edge of the board.
-	unsigned h_pos;
+	int h_pos;
 	/// Vertical position of this vertex, where 0 is the bottom edge of the board.
-	unsigned v_pos;
+	int v_pos;
 };
 
 }

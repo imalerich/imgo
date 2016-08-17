@@ -10,7 +10,7 @@ imgo: $(OBJ)
 imgo.o: imgo.cpp
 	g++ $(CFLAGS) imgo.cpp
 
-run: imgo
+run:
 	../bin/imgo
 
 clean:
