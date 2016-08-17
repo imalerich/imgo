@@ -36,7 +36,7 @@ std::string player_to_string(const Player p);
 class Color : public iArgument {
 public:
 	/** Needed so we can store it as a non-reference in the move container. */
-	Color();
+	Color() { }
 	/** Initialize directly from the Player enumrated type. */
 	Color(Player p);
 	/** Initialize from a string that is converted to the Player enumerated type. */

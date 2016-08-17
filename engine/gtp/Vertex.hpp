@@ -16,7 +16,7 @@ namespace gtp {
 class Vertex : public iArgument {
 public:
 	/** Needed so we can store it as a non-reference in the move container. */
-	Vertex();
+	Vertex() { }
 
 	/**
 	 * Constructs a vertex object from the string representation returned by 

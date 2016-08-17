@@ -29,7 +29,7 @@ enum ArgType {
  */
 class iArgument {
 public:
-	virtual ~iArgument();
+	virtual ~iArgument() { }
 	ArgType type; /**< What type of data is stored? */
 };
 
@@ -43,10 +43,7 @@ typedef std::vector<std::unique_ptr<iArgument>> ARG_LIST;
 /** Implements the Integer argument type. */
 class ArgInteger : public iArgument {
 public:
-	ArgInteger(std::string str) {
-		iArgument::type = ARG_INTEGER;
-		data = boost::lexical_cast<int>(str);
-	}
+	ArgInteger(std::string str);
 
 	/** Encapsulated integer data. */
 	int data;
@@ -55,10 +52,7 @@ public:
 /** Implements the Integer argument type. */
 class ArgFloat : public iArgument {
 public:
-	ArgFloat(std::string str) {
-		iArgument::type = ARG_FLOAT;
-		data = boost::lexical_cast<float>(str);
-	}
+	ArgFloat(std::string str);
 
 	/** Encapsulated float data. */
 	float data;
@@ -67,10 +61,7 @@ public:
 /** Implements the String argument type. */
 class ArgString : public iArgument {
 public:
-	ArgString(std::string str) {
-		iArgument::type = ARG_STRING;
-		data = str;
-	}
+	ArgString(std::string str);
 
 	/** Encapsulated string data. */
 	std::string data;
@@ -79,10 +70,7 @@ public:
 /** Implements the Boolean argument type. */
 class ArgBoolean : public iArgument {
 public:
-	ArgBoolean(std::string str) {
-		iArgument::type = ARG_BOOLEAN;
-		data = boost::lexical_cast<bool>(str);
-	}
+	ArgBoolean(std::string str);
 
 	/** Encapsulated bool data. */
 	bool data;

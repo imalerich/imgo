@@ -2,12 +2,23 @@
 #define ENGINE_HPP
 
 #include <iostream>
+#include <sstream>
 #include <string>
+#include <map>
 
 #include "Command.hpp"
 #include "Argument.hpp"
 
 namespace gtp {
+
+/**
+ * Defines a function that may be registered to the GTP Engine.
+ * When an engine recives the corresponding Command, the registered
+ * function will be called. This function should return the string
+ * representing the result of the function, it will then be output by the
+ * Engine (including any additional data needed by the controller).
+ */
+typedef std::string (*ProcCmd)(const ARG_LIST&);
 
 /**
  * An engine for the Go Text Protocol.
@@ -16,15 +27,34 @@ namespace gtp {
  */
 class Engine {
 public:
+	/**
+	 * Read and execute a single command from the input stream.
+	 * \param is Input stream to read a command from.
+	 */
+	void proc_command(std::istream &is);
+
+	/**
+	 * Registers the input proc to the given command.
+	 * Whenever that command is received from the controller,
+	 * the proc function will be executed with the arguments
+	 * as supplied by the controller.
+	 * If a proccess is already registered to the input Command,
+	 * that process will be overridden.
+	 * \param cmd Command to register the input proc to.
+	 * \param proc The process to execute on receiving the given command.
+	 */
+	void register_proc(Command cmd, const ProcCmd &proc);
 
 private:
+	std::map<Command,ProcCmd> commands;
+
 	/**
 	 * Parse all arguments from the input line, given the type of argument that will be parsed.
 	 * \param cmd Type of command to parse arguments for.
-	 * \param line A string of arguments to be parsed. 
+	 * \param iss Input string stream of the line being parsed.
 	 * \return Array of pointers to argument objects.
 	 */
-	ARG_LIST args_for_cmd(const Command &cmd, const std::string &line);
+	ARG_LIST args_for_cmd(const Command &cmd, std::istringstream &iss);
 
 	/**
 	 * Performs preprocessing on a line of text.

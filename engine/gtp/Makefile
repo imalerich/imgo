@@ -1,5 +1,5 @@
 CFLAGS = -std=c++1y -Wall -g -c
-OBJ = Engine.o Player.o Vertex.o Command.o
+OBJ = Engine.o Player.o Vertex.o Command.o Argument.o Move.o
 LIB = ../../lib
 OUT = $(LIB)/libimgtp.a
 
@@ -7,7 +7,7 @@ imgtp.a: $(OBJ)
 	[ -d $(LIB) ] || mkdir $(LIB)
 	ar rvs $(OUT) $(OBJ)
 
-Engine.o: Engine.hpp Engine.cpp Move Command.o
+Engine.o: Engine.hpp Engine.cpp Move.hpp Command.hpp
 	g++ $(CFLAGS) Engine.cpp
 
 Player.o: Player.hpp Player.cpp
@@ -19,9 +19,11 @@ Vertex.o: Vertex.hpp Vertex.cpp
 Command.o: Command.hpp Command.cpp
 	g++ $(CFLAGS) Command.cpp
 
-Move: Argument Player.o Vertex.o
+Argument.o: Argument.hpp Argument.cpp
+	g++ $(CFLAGS) Argument.cpp
 
-Argument: Argument.hpp
+Move.o: Argument.hpp Player.hpp Vertex.hpp Move.hpp Move.cpp
+	g++ $(CFLAGS) Move.cpp
 
 clean:
 	rm -rf *.o

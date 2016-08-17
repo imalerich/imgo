@@ -10,17 +10,8 @@ namespace gtp {
 /** Implements the Move argument type. */
 class ArgMove : public iArgument {
 public:
-	ArgMove(std::string color, std::string vertex) {
-		iArgument::type = ARG_MOVE;
-		this->color = Color(color);
-		this->vertex = Vertex(vertex);
-	}
-
-	ArgMove(Color color, Vertex vertex) {
-		iArgument::type = ARG_MOVE;
-		this->color = color;
-		this->vertex = vertex;
-	}
+	ArgMove(std::string color, std::string vertex);
+	ArgMove(Color color, Vertex vertex);
 
 	/** Encapsulated Color data. */
 	Color color;
