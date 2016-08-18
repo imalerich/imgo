@@ -62,7 +62,6 @@ with train_env.begin(write=True) as train_txn, test_env.begin(write=True) as tes
             score = imgo.gameWinner(r)
 
             # Next up we need to build the array representing the game board.
-            # This will be a 9x9 board with 2 channel per location.
             # White will be channel 0, Black will be channel 1.
             board = np.zeros((imgo.CHANNELS, imgo.BOARD_SIZE, imgo.BOARD_SIZE), dtype=np.uint8)
             game = sgf.parse(r).children[0]
