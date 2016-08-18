@@ -128,6 +128,8 @@ def checkCaptureOnNode(board, channel, x, y, depth):
         return board[channel][x][y]
 
     numLiberties = numberOfLiberties(board, x, y)
+    neighbors = friendlyNeighbors(board, channel, x, y)
+
     if numLiberties > 0:
         # Liberties still remain, we are for sure alive.
         board[channel][x][y] = 2
@@ -136,7 +138,6 @@ def checkCaptureOnNode(board, channel, x, y, depth):
             board[channel][n[0]][n[1]] = 2
         return 2
 
-    neighbors = friendlyNeighbors(board, channel, x, y)
     if len(neighbors) == 0:
         # No liberties and no neighbors, we are for sure dead.
         board[channel][x][y] = 0
