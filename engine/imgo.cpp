@@ -7,6 +7,6 @@
 
 int main(int argc, char ** argv) {
 	gtp::Engine engine;
-	engine.play();
+	engine.play(std::cin);
 	return 0;
 }

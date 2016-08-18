@@ -1,7 +1,7 @@
-CFLAGS = -std=c++1y -Wall -g -c -I./ -I$(CUDA)/include/ -I$(CAFFE)/include/
-LFLAGS = -lm -L ../lib
+CFLAGS = -std=c++1y -Wall -g -c -I./ -I$(CUDA)/include/ -I$(CAFFE_DIST)/include/
+LFLAGS = -lm -L ../lib -L $(CAFFE_DIST)/lib/
 OBJ = imgo.o
-LIB = -limgtp -lboost_system
+LIB = -limgtp -lboost_system -lcaffe
 
 imgo: $(OBJ)
 	[ -d ../bin ] || mkdir ../bin

@@ -26,7 +26,7 @@ Engine::Engine() {
 
 void Engine::play(std::istream &is) {
 	while (!is.eof()) {
-		engine.proc_command(is);
+		proc_command(is);
 	}
 }
 
