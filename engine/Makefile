@@ -1,4 +1,4 @@
-CFLAGS = -std=c++1y -Wall -g -c -I ./
+CFLAGS = -std=c++1y -Wall -g -c -I./ -I$(CUDA)/include/ -I$(CAFFE)/include/
 LFLAGS = -lm -L ../lib
 OBJ = imgo.o
 LIB = -limgtp -lboost_system

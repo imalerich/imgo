@@ -107,9 +107,11 @@ def procCapturesOnChannel(board, channel):
         for x in range(0, BOARD_SIZE):
             checkCaptureOnNode(board, channel, x, y, 0)
 
-    # Now that we have completed our tests for capture, normalize the board.
-    board[0] = board[0] / board[0]
-    board[1] = board[1] / board[1]
+    for y in range(0, BOARD_SIZE):
+        for x in range(0, BOARD_SIZE):
+            board[0][x][y] = 0 if board[0][x][y] == 0 else 1
+            board[1][x][y] = 0 if board[1][x][y] == 0 else 1
+
     return
 
 
