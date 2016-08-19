@@ -8,7 +8,7 @@ layer {
   	phase: TRAIN
   }
   data_param {
-    source: "../data/lmdb/lmdb_black_policy_train"
+    source: "../data/lmdb/lmdb_policy_train"
     batch_size: 100
     backend: LMDB
   }
@@ -22,7 +22,7 @@ layer {
   	phase: TEST
   }
   data_param {
-    source: "../data/lmdb/lmdb_black_policy_test"
+    source: "../data/lmdb/lmdb_policy_test"
     batch_size: 100
     backend: LMDB
   }

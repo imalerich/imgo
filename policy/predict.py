@@ -15,8 +15,7 @@ imgo = __import__('imgo')
 # Directoryies and Strings.
 PATH = '../data/games/'
 MODEL = 'imgo_policy_net_deploy.prototxt'
-WHITE_PRETRAINED = '../net/imgo_white_policy_iter_10000.caffemodel'
-BLACK_PRETRAINED = '../net/imgo_black_policy_iter_10000.caffemodel'
+PRETRAINED = '../net/imgo_policy_iter_10000.caffemodel'
 
 # List all of the files in that record.
 # This doesn't check if they are all .sgf, but they should be.
@@ -25,15 +24,12 @@ FILES = [f for f in listdir(PATH) if isfile(join(PATH, f))]
 NUM_RECORDS = len(FILES)
 
 caffe.set_mode_gpu()
-white_net = caffe.Net(MODEL, WHITE_PRETRAINED, caffe.TEST)
-black_net = caffe.Net(MODEL, BLACK_PRETRAINED, caffe.TEST)
+net = caffe.Net(MODEL, PRETRAINED, caffe.TEST)
 
 # How many of our predictions did we predict correctly?
-BLACK_CORRECT = 0
-WHITE_CORRECT = 0
+CORRECT = 0
 # How many predictions did we make?
-BLACK_TOTAL = 0
-WHITE_TOTAL = 0
+TOTAL = 0
 
 for g in range(0, NUM_RECORDS):
 
@@ -51,7 +47,6 @@ for g in range(0, NUM_RECORDS):
         # Loop through each move of the game.
         for node in game.rest:
             # Run the game through our network.
-            net = black_net if imgo.isNodeBlack(node) else white_net
             net.blobs['data'].data[...] = board
             net.forward()
             pr = net.blobs['loss'].data[0]
@@ -64,15 +59,12 @@ for g in range(0, NUM_RECORDS):
                 pr[idx] = 0 # Don't take moves more than once.
 
             # Check if the actual move was predicted.
-            BLACK_TOTAL += (1 if imgo.isNodeBlack(node) else 0)
-            WHITE_TOTAL += (0 if imgo.isNodeBlack(node) else 1)
+            TOTAL += 1
             if imgo.nodeToIndex(node) in moves:
-                BLACK_CORRECT += (1 if imgo.isNodeBlack(node) else 0)
-                WHITE_CORRECT += (0 if imgo.isNodeBlack(node) else 1)
+                CORRECT + 1
 
             # Update the game board.
             imgo.addNodeToGame(board, node)
 
 # How well did we do?
-print(str(BLACK_CORRECT) + '/' + str(BLACK_TOTAL))
-print(str(WHITE_CORRECT) + '/' + str(WHITE_TOTAL))
+print(str(CORRECT) + '/' + str(TOTAL))
