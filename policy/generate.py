@@ -69,9 +69,9 @@ with train_env.begin(write=True) as train_txn, test_env.begin(write=True) as tes
 
             # Loop through each move of the game.
             for node in game.rest:
-                print('Adding move from ' + str(filename) + ' to ' + db_name)
                 nxt = imgo.nodeToIndex(node)
                 if nxt != 81: # Ignore passes
+                    print('Adding move from ' + str(filename) + ' to ' + db_name)
                     imgo.recordEntry(g, board, nxt, txn)
                     NUM_ENTRIES += 1
                 imgo.addNodeToGame(board, node)

@@ -58,10 +58,16 @@ for g in range(0, NUM_RECORDS):
                 moves.append(idx)
                 pr[idx] = 0 # Don't take moves more than once.
 
+            # if g < 5:
+            #     print(moves)
+            #     print(imgo.nodeToIndex(node))
+            # else:
+            #     exit()
+
             # Check if the actual move was predicted.
             TOTAL += 1
             if imgo.nodeToIndex(node) in moves:
-                CORRECT + 1
+                CORRECT += 1
 
             # Update the game board.
             imgo.addNodeToGame(board, node)
