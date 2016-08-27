@@ -6,12 +6,14 @@ import re
 
 # Size of the game board.
 BOARD_SIZE = 9
-# Number of Channels to use, the data stored in each channel is as follows.
-# 0 White Stone
-# 1 Black Stones
-# 2 Turns Since Stone
-# 3 Number of Liberties
-CHANNELS = 4
+# Number of Channels to use, refer to the below constants to find how each channel is used.
+CHANNELS = 3
+
+WHITE_CHANNEL = 0
+BLACK_CHANNEL = 1
+LIBERTY_CHANNEL = 2
+CURRENT_TURN_CHANNEL = 3
+TURN_COUNTER_CHANNEL = 4
 
 # Returns the winner of the game represented by
 # r (the contents of an sgf file) as an integer,
@@ -45,7 +47,7 @@ def isNodeBlack(node):
 
 # Returns if this current node is to be played by the white player.
 def isNodeWhite(node):
-    return ('W' in node.proterties)
+    return ('W' in node.properties)
 
 # Record a game entry to the lmdb database.
 def recordEntry(game, board, label, txn):
@@ -64,10 +66,10 @@ def recordEntry(game, board, label, txn):
 def addNodeToGame(board, node):
     # Find the move (black or white) and position
     if 'W' in node.properties:
-        channel = 0
+        channel = WHITE_CHANNEL
         pos = node.properties['W'][0]
     elif 'B' in node.properties:
-        channel = 1
+        channel = BLACK_CHANNEL
         pos = node.properties['B'][0]
 
     # Place the move onto the board.
@@ -80,27 +82,48 @@ def addNodeToGame(board, node):
         # Process any extra information we are storing in our board.
         addAndIncrementCounter(board, y, x)
         rebuildLiberties(board)
+        setNextTurn(board, invertPlayerChannel(channel))
 
     return
 
-# Increments the turn counter (layer 3) and removes captured stones.
+# Increments the turn counter (layer TURN_COUNTER_CHANNEL) and removes captured stones.
 # Then add a turn counter for the newly added stone (given by the position x, y).
 def addAndIncrementCounter(board, x, y):
-    for y in range(0, BOARD_SIZE):
-        for x in range(0, BOARD_SIZE):
-            if board[0][x][y] == 0 and board[0][y][x] == 0:
-                board[2][x][y] = 0 # Stone was captured
-            if board[2][x][y] > 0:
-                board[2][x][y] += 1 # Increment the turn counter
+    if CHANNELS <= TURN_COUNTER_CHANNEL:
+        return
 
-    board[2][x][y] = 1
+    for j in range(0, BOARD_SIZE):
+        for i in range(0, BOARD_SIZE):
+            if board[0][i][j] == 0 and board[1][i][j] == 0:
+                board[TURN_COUNTER_CHANNEL][i][j] = 0 # Stone was captured
+            if board[TURN_COUNTER_CHANNEL][i][j] > 0:
+                board[TURN_COUNTER_CHANNEL][i][j] += 1 # Increment the turn counter
+
+    board[TURN_COUNTER_CHANNEL][x][y] = 1
     return
 
-# Build the liberty counter for the board (layer 4).
+# Build the liberty counter for the board (layer LIBERTY_CHANNEL).
 def rebuildLiberties(board):
+    if CHANNELS <= LIBERTY_CHANNEL:
+        return
+
     for y in range(0, BOARD_SIZE):
         for x in range(0, BOARD_SIZE):
-            board[3][x][y] = numberOfLiberties(board, x, y)
+            board[LIBERTY_CHANNEL][x][y] = numberOfLiberties(board, x, y)
+    return
+
+# Set the layer CURRENT_TURN_CHANNEL of the board to the channel # of the next
+# player to play (who's turn it is to play given the current board).
+# This should be given as the 'turn' parameter, 
+# opposite of the channel of the last stone played.
+def setNextTurn(board, turn):
+    if CHANNELS <= CURRENT_TURN_CHANNEL:
+        return
+
+    for y in range(0, BOARD_SIZE):
+        for x in range(0, BOARD_SIZE):
+            board[CURRENT_TURN_CHANNEL] = turn
+    
     return
 
 # Remove captured stones from the board, only stones of from the given
@@ -117,7 +140,6 @@ def procCapturesOnChannel(board, channel):
             board[1][x][y] = 0 if board[1][x][y] == 0 else 1
 
     return
-
 
 # Check if the given node, defined by the x, y coordinate in the given channel
 # should be captured. If so that node will be removed from the board, this will

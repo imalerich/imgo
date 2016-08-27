@@ -32,24 +32,11 @@ layer {
 	type: "Convolution"
 	bottom: "data"
 	top: "convo"
-	param {
-		lr_mult: 1.0
-	}
-	param {
-		lr_mult: 2.0
-	}
 	convolution_param {
 		num_output: 64
 		pad: 2
 		kernel_size: 5
 		stride: 1
-		weight_filler {
-			type: "gaussian"
-			std: 0.0001
-		}
-		bias_filler {
-			type: "constant"
-		}
 	}
 }
 layer {
@@ -69,7 +56,7 @@ layer {
   bottom: "pool"
   top: "ip"
   inner_product_param {
-    num_output: 82
+    num_output: 81
   }
 }
 layer {

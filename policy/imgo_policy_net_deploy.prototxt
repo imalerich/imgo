@@ -6,7 +6,7 @@ layer {
   input_param {
   	shape: {
 		dim: 1
-		dim: 4
+		dim: 3
 		dim: 9
 		dim: 9
 	}
@@ -54,7 +54,7 @@ layer {
   bottom: "pool"
   top: "ip"
   inner_product_param {
-    num_output: 82
+    num_output: 81
   }
 }
 layer {

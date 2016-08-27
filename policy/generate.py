@@ -71,8 +71,9 @@ with train_env.begin(write=True) as train_txn, test_env.begin(write=True) as tes
             for node in game.rest:
                 print('Adding move from ' + str(filename) + ' to ' + db_name)
                 nxt = imgo.nodeToIndex(node)
-                imgo.recordEntry(g, board, nxt, txn)
-                NUM_ENTRIES += 1
+                if nxt != 81: # Ignore passes
+                    imgo.recordEntry(g, board, nxt, txn)
+                    NUM_ENTRIES += 1
                 imgo.addNodeToGame(board, node)
 
     print('SUCCESS! Generated ' + str(NUM_ENTRIES) + ' entries.')
