@@ -7,7 +7,7 @@ import re
 # Size of the game board.
 BOARD_SIZE = 9
 # Number of Channels to use, refer to the below constants to find how each channel is used.
-CHANNELS = 3
+CHANNELS = 4
 
 WHITE_CHANNEL = 0
 BLACK_CHANNEL = 1

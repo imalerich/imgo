@@ -15,7 +15,7 @@ imgo = __import__('imgo')
 # Directoryies and Strings.
 PATH = '../data/games/'
 MODEL = 'imgo_policy_net_deploy.prototxt'
-PRETRAINED = '../net/imgo_policy_iter_10000.caffemodel'
+PRETRAINED = '../net/imgo_policy_iter_50000.caffemodel'
 
 # List all of the files in that record.
 # This doesn't check if they are all .sgf, but they should be.
@@ -58,11 +58,8 @@ for g in range(0, NUM_RECORDS):
                 moves.append(idx)
                 pr[idx] = 0 # Don't take moves more than once.
 
-            # if g < 5:
-            #     print(moves)
-            #     print(imgo.nodeToIndex(node))
-            # else:
-            #     exit()
+            if TOTAL % 100 == 0:
+                print(str(CORRECT) + '/' + str(TOTAL))
 
             # Check if the actual move was predicted.
             TOTAL += 1
@@ -74,3 +71,4 @@ for g in range(0, NUM_RECORDS):
 
 # How well did we do?
 print(str(CORRECT) + '/' + str(TOTAL))
+print('DONE')
