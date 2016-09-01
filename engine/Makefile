@@ -5,7 +5,7 @@ LIB = -limgtp -lboost_system -lcaffe
 
 imgo: $(OBJ)
 	[ -d ../bin ] || mkdir ../bin
-	g++ -o ../bin/imgo $(LFLAGS) $(OBJ) $(LIB)
+	g++ -o ../bin/imgo $(OBJ) $(LFLAGS) $(LIB)
 
 imgo.o: imgo.cpp
 	g++ $(CFLAGS) imgo.cpp
